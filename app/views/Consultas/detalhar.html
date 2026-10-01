@@ -1,0 +1,17 @@
+#{extends 'main.html' /}
+#{set title:'Detalhamento de Consulta' /}
+
+<h1>Detalhamento</h1>
+<hr />
+
+<div class="card col-md-6">
+	<div class="card-body">
+		<p><strong>Paciente:</strong> ${consulta.paciente?.nome}</p>
+		<p><strong>Médico:</strong> ${consulta.medico?.nome}</p>
+		<p><strong>Especialidade:</strong> ${consulta.medico?.especialidade?.nome ?: 'Não informado'}</p>
+		<p><strong>Data:</strong> ${consulta.data?.format('dd/MM/yyyy') ?: 'Não informada'}</p>
+		<p><strong>Horário:</strong> ${consulta.horario}</p>
+	</div>
+</div>
+
+<a href="@{Consultas.listar}" class="btn btn-primary mt-3">Retornar</a>

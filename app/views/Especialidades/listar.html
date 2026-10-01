@@ -1,0 +1,35 @@
+#{extends 'main.html' /}
+#{set title:'Listagem de Especialidades' /}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+	<h1 class="m-0">Especialidades</h1>
+	<a href="@{Especialidades.form}" class="btn btn-success">+ Nova Especialidade</a>
+</div>
+
+<form action="@{Especialidades.listar}" class="d-flex mb-4">
+	<input type="text" name="termo" value="${termo}" placeholder="Informe o nome" class="form-control me-2" />
+	<button type="submit" class="btn btn-outline-primary">Buscar</button>
+</form>
+
+<div class="row">
+#{list items:especialidades, as:'d'}
+	<div class="col-md-6 col-lg-4 mb-3">
+		<div class="card shadow-sm h-100">
+			<div class="card-body">
+				<h5 class="card-title">${d.nome}</h5>
+				<p class="card-text mb-3"><strong>Ramal:</strong> ${d.ramal}</p>
+				<div class="d-flex gap-2">
+					<a href="@{Especialidades.editar(d.id)}" class="btn btn-sm btn-secondary">Editar</a>
+					<a href="@{Especialidades.remover(d.id)}" class="btn btn-sm btn-danger"
+					   onclick="return confirm('Remover esta Especialidade?')">Remover</a>
+				</div>
+			</div>
+		</div>
+	</div>
+#{/list}
+#{else}
+	<div class="col-12">
+		<p class="text-muted">Nenhuma especialidade cadastrada.</p>
+	</div>
+#{/else}
+</div>

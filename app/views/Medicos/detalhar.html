@@ -1,0 +1,16 @@
+#{extends 'main.html' /}
+#{set title:'Detalhamento de Médicos' /}
+
+<h1>Detalhamento</h1>
+<hr />
+
+<div class="card col-md-6">
+	<div class="card-body">
+		<p><strong>Nome:</strong> ${medico.nome}</p>
+		<p><strong>Email:</strong> ${medico.email}</p>
+		<p><strong>Nascimento:</strong> ${medico.nascimento?.format('dd/MM/yyyy') ?: 'Não informado'}</p>
+		<p><strong>Especialidade:</strong> ${medico.especialidade?.nome ?: 'Não informado'}</p>
+	</div>
+</div>
+
+<a href="@{Medicos.listar}" class="btn btn-primary mt-3">Retornar</a>

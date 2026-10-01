@@ -1,0 +1,29 @@
+#{extends 'main.html' /}
+#{set title:'Cadastro de Especialidade' /}
+
+#{if d?.id}
+	<h1>Edição de especialidade</h1>
+#{/if}
+#{else}
+	<h1>Cadastro de especialidade</h1>
+#{/else}
+
+<hr />
+
+<form action="/especialidades/salvar" method="post" class="col-md-6">
+
+	<input type="hidden" name="especialidade.id" value="${d.id}" />
+
+	<div class="mb-3">
+		<label class="form-label">Nome</label>
+		<input type="text" name="especialidade.nome" value="${d.nome}" placeholder="Nome da Especialidade" class="form-control"/>
+	</div>
+
+	<div class="mb-3">
+		<label class="form-label">Ramal</label>
+		<input type="text" name="especialidade.ramal" value="${d.ramal}" placeholder="Ramal" class="form-control"/>
+	</div>
+
+	<button type="submit" class="btn btn-primary">Salvar</button>
+	<a href="@{Especialidades.listar}" class="btn btn-outline-secondary">Cancelar</a>
+</form>

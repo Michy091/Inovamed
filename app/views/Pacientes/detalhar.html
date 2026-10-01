@@ -1,0 +1,17 @@
+#{extends 'main.html' /}
+#{set title:'Detalhamento de Paciente' /}
+
+<h1>Detalhamento</h1>
+<hr />
+
+<div class="card col-md-6">
+	<div class="card-body">
+		<p><strong>Paciente:</strong> ${paciente.nome}</p>
+		<p><strong>Email:</strong> ${paciente.email}</p>
+		<p><strong>Data de Nascimento:</strong> ${paciente.nascimento}</p>
+		<p><strong>Cpf:</strong> ${paciente.cpf}</p>
+		<p><strong>Telefone:</strong> ${paciente.telefone}</p>
+	</div>
+</div>
+
+<a href="@{Pacientes.listar}" class="btn btn-primary mt-3">Retornar</a>

@@ -1,0 +1,43 @@
+#{extends 'main.html' /}
+#{set title:'Clínica - Início' /}
+
+<section class="hero">
+    <span class="hero-eyebrow">Sistema de Gestão Clínica</span>
+    <h1>Gerencie sua clínica com eficiência e praticidade.</h1>
+    <p>Centralize o cadastro de pacientes, médicos, especialidades e consultas em uma única plataforma, proporcionando mais organização, agilidade e qualidade no atendimento.</p>
+    <a href="@{Consultas.form}" class="btn btn-light">+ Nova consulta</a>
+</section>
+
+<h2 class="section-title">Acesso rápido</h2>
+<p class="section-subtitle">Selecione um módulo para cadastrar, consultar ou gerenciar as informações da clínica.</p>
+
+<div class="row g-3">
+    <div class="col-md-6 col-lg-3">
+        <a href="@{Pacientes.listar}" class="quick-link-card">
+            <div class="quick-link-icon">👤</div>
+            <h3>Pacientes</h3>
+            <p>Cadastre e gerencie os pacientes da clínica.</p>
+        </a>
+    </div>
+    <div class="col-md-6 col-lg-3">
+        <a href="@{Consultas.listar}" class="quick-link-card">
+            <div class="quick-link-icon">🗓️</div>
+            <h3>Consultas</h3>
+            <p>Agende, edite e acompanhe as consultas marcadas.</p>
+        </a>
+    </div>
+    <div class="col-md-6 col-lg-3">
+        <a href="@{Medicos.listar}" class="quick-link-card">
+            <div class="quick-link-icon">🩺</div>
+            <h3>Médicos</h3>
+            <p>Mantenha o corpo clínico sempre atualizado.</p>
+        </a>
+    </div>
+    <div class="col-md-6 col-lg-3">
+        <a href="@{Especialidades.listar}" class="quick-link-card">
+            <div class="quick-link-icon">🏷️</div>
+            <h3>Especialidades</h3>
+            <p>Organize as especialidades oferecidas.</p>
+        </a>
+    </div>
+</div>
