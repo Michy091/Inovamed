@@ -3,36 +3,46 @@ package controllers;
 import java.util.List;
 
 import Security.Administrador;
+import Security.Seguranca;
 import models.Especialidade;
 import models.Medico;
 import models.Status;
 import play.data.validation.Valid;
 import play.mvc.Controller;
-
+import play.mvc.With;
+@With(Seguranca.class)
 public class Medicos extends Controller {
 
 	@Administrador
 	public static void form() {
-		Medico p = new Medico();
-		List<Especialidade> especialidades = Especialidade.findAll();
-		render(p, especialidades);
-
+	    Medico p = new Medico();
+	    List<Especialidade> especialidades = Especialidade.find(
+	        "status != ?1 order by nome", Status.INATIVO).fetch();
+	    render(p, especialidades);
 	}
+
 	@Administrador
 	public static void editar(Long id) {
-		Medico p = Medico.findById(id);
-		List<Especialidade> especialidades = Especialidade.findAll();
-		renderTemplate("Medicos/form.html", p, especialidades);
+	    Medico p = Medico.findById(id);
+	    List<Especialidade> especialidades = Especialidade.find(
+	        "status != ?1 order by nome", Status.INATIVO).fetch();
+	    renderTemplate("Medicos/form.html", p, especialidades);
 	}
-	
+
 	public static void listar(String termo) {
-		List<Medico> medicos = null;
-		if (termo == null) {
-			medicos = Medico.find("status != ?1", Status.INATIVO).fetch();			
-		} else {
-			medicos = Medico.find("status != ?1 and (lower(nome) like ?2 or lower(email) like ?2)", Status.INATIVO, "%"+termo.toLowerCase()+"%").fetch();
-		}
-		render(medicos, termo);
+	    List<Medico> medicos = null;
+	    if (termo != null) {
+	        termo = termo.trim();
+	    }
+	    if (termo == null || termo.isEmpty()) {
+	        medicos = Medico.find(
+	            "status != ?1 order by nome", Status.INATIVO).fetch();
+	    } else {
+	        medicos = Medico.find(
+	            "status != ?1 and (lower(nome) like ?2 or lower(email) like ?2) order by nome",
+	            Status.INATIVO, "%" + termo.toLowerCase() + "%").fetch();
+	    }
+	    render(medicos, termo);
 	}
 	
 	public static void detalhar(Long id) {

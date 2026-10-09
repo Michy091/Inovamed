@@ -23,13 +23,19 @@ public class Pacientes extends Controller {
 	}
 
 	public static void listar(String termo) {
-		List<Paciente> pacientes = null;
-		if (termo == null) {
-			pacientes = Paciente.find("status != ?1", Status.INATIVO).fetch();
-		} else {
-			pacientes = Paciente.find("status != ?1 and (lower(nome) like ?2 or lower(email) like ?2)", Status.INATIVO, "%"+termo.toLowerCase()+"%").fetch();
-		}
-		render(pacientes, termo);
+	    List<Paciente> pacientes = null;
+	    if (termo != null) {
+	        termo = termo.trim();
+	    }
+	    if (termo == null || termo.isEmpty()) {
+	        pacientes = Paciente.find(
+	            "status != ?1 order by nome", Status.INATIVO).fetch();
+	    } else {
+	        pacientes = Paciente.find(
+	            "status != ?1 and (lower(nome) like ?2 or lower(email) like ?2) order by nome",
+	            Status.INATIVO, "%" + termo.toLowerCase() + "%").fetch();
+	    }
+	    render(pacientes, termo);
 	}
 
 	public static void detalhar(Long id) {

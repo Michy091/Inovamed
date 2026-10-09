@@ -30,4 +30,8 @@ public class Consulta extends Model {
 	public String horario;
 	@Enumerated(EnumType.STRING)
 	public Status status;
+	
+	public Consulta() {
+		this.status = Status.ATIVO;
+	}
 	}

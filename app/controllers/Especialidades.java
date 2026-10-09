@@ -3,11 +3,13 @@ package controllers;
 import java.util.List;
 
 import Security.Administrador;
+import Security.Seguranca;
 import models.Especialidade;
 import models.Status;
 import play.data.validation.Valid;
 import play.mvc.Controller;
-
+import play.mvc.With;
+@With(Seguranca.class)
 public class Especialidades extends Controller {
 
 	@Administrador
@@ -23,13 +25,20 @@ public class Especialidades extends Controller {
 
 	public static void listar(String termo) {
 		List<Especialidade> especialidades = null;
-		if (termo == null) {
-			especialidades = Especialidade.find("1=1 order by nome").fetch();
-		} else {
-			especialidades = Especialidade.find("lower(nome) like ?1", "%"+termo.toLowerCase()+"%").fetch();
-		}
+		if (termo != null) {
+termo = termo.trim();
+} 
+		if (termo ==  null || termo.isEmpty()){
+			especialidades = Especialidade.find(
+					 "status != ?1 order by nome", Status.INATIVO).fetch();
+	    } else {
+	        especialidades = Especialidade.find(
+	            "status != ?1 and lower(nome) like ?2 order by nome",
+	            Status.INATIVO, "%" + termo.toLowerCase() + "%").fetch();
+	    }		
 		render(especialidades, termo);
-	}
+		}
+	
 	@Administrador
 	public static void salvar(@Valid Especialidade especialidade) {
 		if (validation.hasErrors()) {
