@@ -2,13 +2,13 @@ package controllers;
 
 import java.util.List;
 
+import Security.Administrador;
+import Security.Seguranca;
 import models.Paciente;
 import models.Status;
 import play.data.validation.Valid;
 import play.mvc.Controller;
 import play.mvc.With;
-import security.Administrador;
-import security.Seguranca;
 @With(Seguranca.class)
 public class Pacientes extends Controller {
 
