@@ -10,7 +10,7 @@ import play.db.jpa.Model;
 @Entity
 public class Especialidade extends Model{
 
-	@Required
+	@Required(message = "Informe o nome da especialidade")
 	public String nome;
 	public Integer ramal;
 
