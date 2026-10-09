@@ -2,19 +2,23 @@ package controllers;
 
 import java.util.List;
 
+import Security.Administrador;
 import models.Especialidade;
 import models.Medico;
 import models.Status;
+import play.data.validation.Valid;
 import play.mvc.Controller;
 
 public class Medicos extends Controller {
 
+	@Administrador
 	public static void form() {
 		Medico p = new Medico();
 		List<Especialidade> especialidades = Especialidade.findAll();
 		render(p, especialidades);
 
 	}
+	@Administrador
 	public static void editar(Long id) {
 		Medico p = Medico.findById(id);
 		List<Especialidade> especialidades = Especialidade.findAll();
@@ -35,15 +39,21 @@ public class Medicos extends Controller {
 		Medico medico = Medico.findById(id);
 		render(medico);
 	}
-	
-	public static void salvar(Medico medico) {
-		medico.nome = medico.nome.toUpperCase();
-		medico.email = medico.email.toLowerCase();
+	@Administrador
+	public static void salvar(@Valid Medico medico) {
+		if (validation.hasErrors()) {
+			Medico p = medico;
+			List<Especialidade> especialidades = Especialidade.find("status != ?1", Status.INATIVO).fetch();
+			renderTemplate("Medicos/form.html", p, especialidades);
+		}
+
+		if (medico.nome != null) medico.nome = medico.nome.toUpperCase();
+		if (medico.email != null) medico.email = medico.email.toLowerCase();
 		medico.save();
-		flash.success("Médico cadastrado com sucesso!");
+		flash.success("Médico salvo com sucesso!");
 		listar(null);
 	}
-	
+	@Administrador
 	public static void remover(Long id) {
 		Medico me = Medico.findById(id);
 		me.status = Status.INATIVO;
@@ -52,6 +62,7 @@ public class Medicos extends Controller {
 		flash.success("Médico removido com sucesso!");
 		listar(null);
 	}
+
 
 }
 

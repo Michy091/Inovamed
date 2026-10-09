@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.List;
 
+import Security.Administrador;
 import models.Consulta;
 import models.Medico;
 import models.Paciente;
@@ -65,13 +66,20 @@ public class Consultas extends Controller {
 	    flash.success("Consulta cadastrada com sucesso!");
 	    listar(null);
 	}
-
+	@Administrador
 	public static void remover(Long id) {
-		Consulta c = Consulta.findById(id);
-		c.status = Status.INATIVO;
-		c.save();
-		flash.success("Consulta removida com sucesso!");
-		listar(null);
-	}
+	    Consulta p = Consulta.findById(id);
 
+	    if (p == null) {
+	        flash.error("Consulta não encontrada.");
+	        listar(null);
+	        return;
+	    }
+
+	    p.status = Status.INATIVO;
+	    p.save();
+
+	    flash.success("Consulta removida com sucesso!");
+	    listar(null);
+	}
 }

@@ -2,8 +2,10 @@ package controllers;
 
 import java.util.List;
 
+import Security.Administrador;
 import models.Paciente;
 import models.Status;
+import play.data.validation.Valid;
 import play.mvc.Controller;
 
 public class Pacientes extends Controller {
@@ -33,14 +35,19 @@ public class Pacientes extends Controller {
 		render(paciente);
 	}
 
-	public static void salvar(Paciente paciente) {
+	public static void salvar(@Valid Paciente paciente) {
+		if (validation.hasErrors()) {
+			Paciente p = paciente;
+			renderTemplate("Pacientes/form.html", p);
+		}
+
 		if (paciente.nome != null) paciente.nome = paciente.nome.toUpperCase();
 		if (paciente.email != null) paciente.email = paciente.email.toLowerCase();
 		paciente.save();
-		flash.success("Paciente cadastrado com sucesso!");
+		flash.success("Paciente salvo com sucesso!");
 		listar(null);
 	}
-
+	@Administrador
 	public static void remover(Long id) {
 		Paciente p = Paciente.findById(id);
 		p.status = Status.INATIVO;

@@ -1,54 +1,117 @@
 #{extends 'main.html' /}
+
 #{set title:'Cadastro de Consulta' /}
 
 #{if c?.id}
-	<h1>Edição de Consulta</h1>
+
+    <h1>Edição de Consulta</h1>
+
 #{/if}
+
 #{else}
-	<h1>Cadastro de Consulta</h1>
+
+    <h1>Cadastro de Consulta</h1>
+
 #{/else}
 
 <hr />
 
 <form action="/consultas/salvar" method="post" class="col-md-6">
 
-	<input type="hidden" name="consulta.id" value="${c.id}" />
+    <input type="hidden" name="consulta.id" value="${c.id}" />
 
-	<div class="mb-3">
-		<label class="form-label">Paciente</label>
-		<select name="consulta.paciente.id" class="form-select">
-			#{list items:pacientes, as:'p'}
-				<option value="${p.id}" ${p.id == c.paciente?.id ? 'selected' : ''}>
-					${p.nome}
-				</option>
-			#{/list}
-		</select>
-	</div>
+    <div class="mb-3">
 
-	<div class="mb-3">
-		<label class="form-label">Médico</label>
-		<select name="consulta.medico.id" class="form-select">
-			#{list items:medicos, as:'m'}
-				<option value="${m.id}" ${m.id == c.medico?.id ? 'selected' : ''}>
-					${m.nome} ${m.especialidade?.nome ? '- ' + m.especialidade.nome : ''}
-				</option>
-			#{/list}
-		</select>
-	</div>
+        <label class="form-label">Paciente</label>
 
-	<div class="mb-3">
-		<label class="form-label">Data</label>
-		<input type="text" name="consulta.data" value="${c.data?.format('dd/MM/yyyy')}" placeholder="dd/mm/aaaa" class="form-control"/>
-	</div>
+        <select name="consulta.paciente.id" class="form-select">
 
-	<div class="mb-3">
-		<label class="form-label">Horário</label>
-		<input type="text" name="consulta.horario" value="${c.horario}" placeholder="hh:mm" class="form-control"/>
-		#{ifError 'consulta.horario'}
-    <div class="text-danger mt-1">#{error 'consulta.horario' /}</div>
-#{/ifError}
-	</div>
+            #{list items:pacientes, as:'p'}
 
-	<button type="submit" class="btn btn-primary">Salvar</button>
-	<a href="@{Consultas.listar}" class="btn btn-outline-secondary">Cancelar</a>
+                <option value="${p.id}" ${p.id == c.paciente?.id ? 'selected' : ''}>
+
+                    ${p.nome}
+
+                </option>
+
+            #{/list}
+
+        </select>
+
+        #{ifError 'consulta.paciente'}
+            <div class="text-danger mt-1">
+                #{error 'consulta.paciente' /}
+            </div>
+        #{/ifError}
+
+    </div>
+
+    <div class="mb-3">
+
+        <label class="form-label">Médico</label>
+
+        <select name="consulta.medico.id" class="form-select">
+
+            #{list items:medicos, as:'m'}
+
+                <option value="${m.id}" ${m.id == c.medico?.id ? 'selected' : ''}>
+
+                    ${m.nome} ${m.especialidade?.nome ? '- ' + m.especialidade.nome : ''}
+
+                </option>
+
+            #{/list}
+
+        </select>
+
+        #{ifError 'consulta.medico'}
+            <div class="text-danger mt-1">
+                #{error 'consulta.medico' /}
+            </div>
+        #{/ifError}
+
+    </div>
+
+    <div class="mb-3">
+
+        <label class="form-label">Data</label>
+
+        <input type="text"
+               name="consulta.data"
+               value="${c.data?.format('dd/MM/yyyy')}"
+               placeholder="dd/mm/aaaa"
+               class="form-control"/>
+
+        #{ifError 'consulta.data'}
+            <div class="text-danger mt-1">
+                #{error 'consulta.data' /}
+            </div>
+        #{/ifError}
+
+    </div>
+
+    <div class="mb-3">
+
+        <label class="form-label">Horário</label>
+
+        <input type="text"
+               name="consulta.horario"
+               value="${c.horario}"
+               placeholder="hh:mm"
+               class="form-control"/>
+
+        #{ifError 'consulta.horario'}
+            <div class="text-danger mt-1">
+                #{error 'consulta.horario' /}
+            </div>
+        #{/ifError}
+
+    </div>
+
+    <button type="submit" class="btn btn-primary">Salvar</button>
+
+    <a href="@{Consultas.listar}" class="btn btn-outline-secondary">
+        Cancelar
+    </a>
+
 </form>

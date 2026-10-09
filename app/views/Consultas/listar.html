@@ -23,8 +23,10 @@
 				<div class="d-flex gap-2">
 					<a href="@{Consultas.editar(c.id)}" class="btn btn-sm btn-secondary">Editar</a>
 					<a href="@{Consultas.detalhar(c.id)}" class="btn btn-sm btn-primary">Detalhar</a>
-					<a href="@{Consultas.remover(c.id)}" class="btn btn-sm btn-danger"
-					   onclick="return confirm('Remover esta consulta?')">Remover</a>
+					#{if session['perfilUsuario'] == 'ADMIN'}
+    <a href="@{Consultas.remover(c.id)}" class="btn btn-sm btn-danger"
+       onclick="return confirm('Remover esta consulta?')">Remover</a>
+#{/if}
 				</div>
 			</div>
 		</div>

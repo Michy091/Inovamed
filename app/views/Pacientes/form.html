@@ -1,11 +1,17 @@
 #{extends 'main.html' /}
+
 #{set title:'Cadastro de Paciente' /}
 
 #{if p?.id}
+
     <h1>Edição de Paciente</h1>
+
 #{/if}
+
 #{else}
+
     <h1>Cadastro de Paciente</h1>
+
 #{/else}
 
 <hr />
@@ -15,31 +21,53 @@
     <input type="hidden" name="paciente.id" value="${p.id}" />
 
     <div class="mb-3">
+
         <label class="form-label">Nome</label>
+
         <input type="text" name="paciente.nome" value="${p.nome}" placeholder="Nome" class="form-control"/>
+
+        <div class="text-danger mt-1">#{error 'paciente.nome' /}</div>
+
     </div>
 
     <div class="mb-3">
+
         <label class="form-label">Email</label>
+
         <input type="email" name="paciente.email" value="${p.email}" placeholder="Email" class="form-control"/>
+
+        <div class="text-danger mt-1">#{error 'paciente.email' /}</div>
+
     </div>
 
     <div class="mb-3">
+
         <label class="form-label">CPF</label>
+
         <input type="text" name="paciente.cpf" value="${p.cpf}" placeholder="000.000.000-00" class="form-control"/>
+
     </div>
 
     <div class="mb-3">
+
         <label class="form-label">Telefone</label>
+
         <input type="text" name="paciente.telefone" value="${p.telefone}" placeholder="(84) 99999-9999" class="form-control"/>
+
     </div>
 
     <div class="mb-3">
+
         <label class="form-label">Data de Nascimento</label>
+
         <input type="date" name="paciente.nascimento" value="${p.nascimento?.format('yyyy-MM-dd')}" class="form-control"/>
+
+        <div class="text-danger mt-1">#{error 'paciente.nascimento' /}</div>
+
     </div>
 
     <button type="submit" class="btn btn-primary">Salvar</button>
+
     <a href="@{Pacientes.listar}" class="btn btn-outline-secondary">Cancelar</a>
 
 </form>
