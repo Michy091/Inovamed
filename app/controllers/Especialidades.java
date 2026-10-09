@@ -2,11 +2,11 @@ package controllers;
 
 import java.util.List;
 
-import Security.Administrador;
 import models.Especialidade;
 import models.Status;
 import play.data.validation.Valid;
 import play.mvc.Controller;
+import security.Administrador;
 
 public class Especialidades extends Controller {
 

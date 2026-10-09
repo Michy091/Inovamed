@@ -2,12 +2,12 @@ package controllers;
 
 import java.util.List;
 
-import Security.Administrador;
 import models.Consulta;
 import models.Medico;
 import models.Paciente;
 import models.Status;
 import play.mvc.Controller;
+import security.Administrador;
 
 public class Consultas extends Controller {
 

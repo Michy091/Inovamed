@@ -1,39 +1,86 @@
 #{extends 'main.html' /}
+
 #{set title:'Listagem de Médicos' /}
 
 <div class="d-flex justify-content-between align-items-center mb-4">
-	<h1 class="m-0">Médicos</h1>
-	<a href="@{Medicos.form}" class="btn btn-success">+ Novo Médico</a>
+
+    <h1 class="m-0">Médicos</h1>
+
+    #{if session['perfilUsuario'] == 'ADMIN'}
+        <a href="@{Medicos.form}" class="btn btn-success">
+            + Novo Médico
+        </a>
+    #{/if}
+
 </div>
 
 <form action="@{Medicos.listar}" class="d-flex mb-4" role="search">
-	<input type="text" name="termo" value="${termo}" placeholder="Informe o nome ou email" class="form-control me-2" />
-	<button type="submit" class="btn btn-outline-primary">Buscar</button>
+
+    <input type="text" name="termo" value="${termo}"
+           placeholder="Informe o nome ou email"
+           class="form-control me-2" />
+
+    <button type="submit" class="btn btn-outline-primary">
+        Buscar
+    </button>
+
 </form>
 
 <div class="row">
+
 #{list items:medicos, as:'p'}
-	<div class="col-md-6 col-lg-4 mb-3">
-		<div class="card shadow-sm h-100">
-			<div class="card-body">
-				<h5 class="card-title">${p.nome}</h5>
-				<p class="card-text mb-1"><strong>Email:</strong> ${p.email}</p>
-				<p class="card-text mb-3">
-					<span class="badge bg-info text-dark">${p.especialidade?.nome ?: 'Sem especialidade'}</span>
-				</p>
-				<div class="d-flex gap-2">
-					<a href="@{Medicos.editar(p.id)}" class="btn btn-sm btn-secondary">Editar</a>
-					<a href="@{Medicos.detalhar(p.id)}" class="btn btn-sm btn-primary">Detalhar</a>
-					<a href="@{Medicos.remover(p.id)}" class="btn btn-sm btn-danger"
-					   onclick="return confirm('Remover este médico?')">Remover</a>
-				</div>
-			</div>
-		</div>
-	</div>
+
+    <div class="col-md-6 col-lg-4 mb-3">
+
+        <div class="card shadow-sm h-100">
+
+            <div class="card-body">
+
+                <h5 class="card-title">${p.nome}</h5>
+
+                <p class="card-text mb-1">
+                    <strong>Email:</strong> ${p.email}
+                </p>
+
+                <p class="card-text mb-3">
+                    <span class="badge bg-info text-dark">
+                        ${p.especialidade?.nome ?: 'Sem especialidade'}
+                    </span>
+                </p>
+
+                <div class="d-flex gap-2">
+
+                    #{if session['perfilUsuario'] == 'ADMIN'}
+
+                        <a href="@{Medicos.editar(p.id)}"
+                           class="btn btn-sm btn-secondary">
+                            Editar
+                        </a>
+
+                        <a href="@{Medicos.remover(p.id)}"
+                           class="btn btn-sm btn-danger"
+                           onclick="return confirm('Remover este médico?')">
+                            Remover
+                        </a>
+
+                    #{/if}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
 #{/list}
+
 #{else}
-	<div class="col-12">
-		<p class="text-muted">Nenhum médico cadastrado.</p>
-	</div>
+
+    <div class="col-12">
+        <p class="text-muted">Nenhum médico cadastrado.</p>
+    </div>
+
 #{/else}
+
 </div>

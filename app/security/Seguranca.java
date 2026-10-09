@@ -1,4 +1,4 @@
-package Security;
+package security;
 
 import controllers.Logins;
 import models.Perfil;

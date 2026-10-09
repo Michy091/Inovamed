@@ -14,18 +14,24 @@
     </head>
     <body>
 
-        <nav class="navbar navbar-expand navbar-dark bg-dark mb-4">
-            <div class="container">
-                <a class="navbar-brand" href="@{Application.index}">InovaMed</a>
-                <div>
-                    <a class="nav-link d-inline me-3" href="@{Pacientes.listar}">Pacientes</a>
-                    <a class="nav-link d-inline me-3" href="@{Consultas.listar}">Consultas</a>
-                    <a class="nav-link d-inline me-3" href="@{Medicos.listar}">Médicos</a>
-                    <a class="nav-link d-inline" href="@{Especialidades.listar}">Especialidades</a>
-                </div>
-            </div>
-        </nav>
-
+       <nav class="navbar navbar-expand navbar-dark bg-dark mb-4">
+    <div class="container">
+        <a class="navbar-brand" href="@{Application.index}">InovaMed</a>
+        #{if session['usuarioLogado']}
+        <div class="d-flex align-items-center">
+            <a class="nav-link d-inline me-3" href="@{Pacientes.listar}">Pacientes</a>
+            <a class="nav-link d-inline me-3" href="@{Consultas.listar}">Consultas</a>
+            <a class="nav-link d-inline me-3" href="@{Medicos.listar}">Médicos</a>
+            <a class="nav-link d-inline me-3" href="@{Especialidades.listar}">Especialidades</a>
+            <span class="navbar-text text-light ms-2 me-3">
+                ${session['usuarioNome']}
+                <span class="badge bg-secondary">${session['perfilUsuario']}</span>
+            </span>
+            <a class="btn btn-sm btn-outline-light" href="@{Logins.sair}">Sair</a>
+        </div>
+        #{/if}
+    </div>
+</nav>
         <div class="container">
 
             #{if flash.success}
