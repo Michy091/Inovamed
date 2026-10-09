@@ -40,13 +40,23 @@
 
     </div>
 
-    <div class="mb-3">
+  <div class="mb-3">
 
-        <label class="form-label">CPF</label>
+    <label class="form-label">CPF</label>
 
-        <input type="text" name="paciente.cpf" value="${p.cpf}" placeholder="000.000.000-00" class="form-control"/>
+    <input type="text"
+           name="paciente.cpf"
+           value="${p.cpf}"
+           placeholder="000.000.000-00"
+           maxlength="14"
+           pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
+           title="Use o formato 000.000.000-00"
+           required
+           class="form-control"/>
 
-    </div>
+    <div class="text-danger mt-1">#{error 'paciente.cpf' /}</div>
+
+</div>
 
     <div class="mb-3">
 

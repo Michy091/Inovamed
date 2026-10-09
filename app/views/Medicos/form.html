@@ -53,19 +53,23 @@
 
     </div>
 
-    <div class="mb-3">
+<div class="mb-3">
 
-        <label class="form-label">CRM</label>
+    <label class="form-label">CRM</label>
 
-        <input type="text"
-               name="medico.crm"
-               value="${p.crm}"
-               placeholder="Crm"
-               class="form-control"/>
+    <input type="text"
+           name="medico.crm"
+           value="${p.crm}"
+           placeholder="123456/RN"
+           maxlength="9"
+           pattern="\d{4,6}/[A-Za-z]{2}"
+           title="Use o formato 123456/RN"
+           required
+           class="form-control"/>
 
-        <div class="text-danger mt-1">#{error 'medico.crm' /}</div>
+    <div class="text-danger mt-1">#{error 'medico.crm' /}</div>
 
-    </div>
+</div>
 
     <div class="mb-3">
 

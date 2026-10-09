@@ -24,10 +24,10 @@ public class Inicializador extends Job {
 		}
 
 		if (Medico.count() == 0) {
-			criarMedico("DR. CARLOS MENDES", "carlos.mendes@inovamed.com", 1980, "CRM-RN 1001", "Cardiologia");
-			criarMedico("DRA. ANA PAULA SOUZA", "ana.souza@inovamed.com", 1985, "CRM-RN 1002", "Pediatria");
-			criarMedico("DR. ROBERTO LIMA", "roberto.lima@inovamed.com", 1978, "CRM-RN 1003", "Ortopedia");
-			criarMedico("DRA. MARIANA COSTA", "mariana.costa@inovamed.com", 1990, "CRM-RN 1004", "Clínica Geral");
+			criarMedico("DR. CARLOS MENDES", "carlos.mendes@inovamed.com", 1980, "1001/RN", "Cardiologia");
+			criarMedico("DRA. ANA PAULA SOUZA", "ana.souza@inovamed.com", 1985, "1002/RN", "Pediatria");
+			criarMedico("DR. ROBERTO LIMA", "roberto.lima@inovamed.com", 1978, "1003/RN", "Ortopedia");
+			criarMedico("DRA. MARIANA COSTA", "mariana.costa@inovamed.com", 1990, "1004/RN", "Clínica Geral");
 		}
 	}
 
