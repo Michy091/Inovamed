@@ -90,6 +90,23 @@
         </select>
 
     </div>
+    
+    #{if !p.id}
+    <hr />
+    <p class="text-muted">Dados de acesso ao sistema</p>
+
+    <div class="mb-3">
+        <label class="form-label">Login</label>
+        <input type="text" name="medico.login" value="${p.login}" class="form-control" autocomplete="off"/>
+        <div class="text-danger mt-1">#{error 'medico.login' /}</div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Senha</label>
+        <input type="password" name="medico.senha" class="form-control" autocomplete="new-password"/>
+        <div class="text-danger mt-1">#{error 'medico.senha' /}</div>
+    </div>
+#{/if}
 
     <button type="submit" class="btn btn-primary">Salvar</button>
 

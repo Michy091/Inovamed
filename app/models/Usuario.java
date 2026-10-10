@@ -60,7 +60,7 @@ public class Usuario extends Model {
 		return confere ? u : null;
 	}
 
-	private static String hash(String senhaPura, String salt) {
+	public static String hash(String senhaPura, String salt) {
 		try {
 			MessageDigest md = MessageDigest.getInstance("SHA-256");
 			byte[] digest = md.digest((salt + senhaPura).getBytes("UTF-8"));

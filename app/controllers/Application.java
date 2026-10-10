@@ -9,8 +9,10 @@ import models.*;
 
 public class Application extends Controller {
 
-    public static void index() {
-        render();
-    }
-
+	public static void index() {
+	    if ("MEDICO".equals(session.get("perfilUsuario"))) {
+	        Consultas.listar(null);
+	    }
+	    render();
+	}
 }

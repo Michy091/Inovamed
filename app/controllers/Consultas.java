@@ -7,6 +7,7 @@ import Security.Seguranca;
 import models.Consulta;
 import models.Medico;
 import models.Paciente;
+import models.Perfil;
 import models.Status;
 import play.data.validation.Valid;
 import play.mvc.Controller;
@@ -36,7 +37,12 @@ public class Consultas extends Controller {
 	    if (termo != null) {
 	        termo = termo.trim();
 	    }
-	    if (termo == null || termo.isEmpty()) {
+	    if ("MEDICO".equals(session.get("perfilUsuario"))) {
+	        Long medicoId = Long.valueOf(session.get("medicoId"));
+	        consultas = Consulta.find(
+	            "status != ?1 and medico.id = ?2 order by data, horario",
+	            Status.INATIVO, medicoId).fetch();
+	    } else if (termo == null || termo.isEmpty()) {
 	        consultas = Consulta.find(
 	            "status != ?1 order by data, horario", Status.INATIVO).fetch();
 	    } else {
@@ -47,13 +53,23 @@ public class Consultas extends Controller {
 	    }
 	    render(consultas, termo);
 	}
-
 	public static void detalhar(Long id) {
 	    Consulta consulta = Consulta.findById(id);
 	    if (consulta == null) {
 	        notFound("Consulta não encontrada");
 	    }
+	    if ("MEDICO".equals(session.get("perfilUsuario"))
+	            && !consulta.medico.id.toString().equals(session.get("medicoId"))) {
+	        forbidden("Você só pode ver as suas próprias consultas");
+	    }
 	    render(consulta);
+	}
+	private static boolean ehMedico() {
+		return Perfil.MEDICO.name().equals(session.get("perfilUsuario"));
+	}
+
+	private static Long meuMedicoId() {
+		return Long.valueOf(session.get("medicoId"));
 	}
 	
 

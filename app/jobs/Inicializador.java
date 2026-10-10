@@ -24,13 +24,11 @@ public class Inicializador extends Job {
 		}
 
 		if (Medico.count() == 0) {
-			criarMedico("DR. CARLOS MENDES", "carlos.mendes@inovamed.com", 1980, "1001/RN", "Cardiologia");
-			criarMedico("DRA. ANA PAULA SOUZA", "ana.souza@inovamed.com", 1985, "1002/RN", "Pediatria");
-			criarMedico("DR. ROBERTO LIMA", "roberto.lima@inovamed.com", 1978, "1003/RN", "Ortopedia");
-			criarMedico("DRA. MARIANA COSTA", "mariana.costa@inovamed.com", 1990, "1004/RN", "Clínica Geral");
-		}
-	}
-
+			criarMedico("DR. CARLOS MENDES", "carlos.mendes@inovamed.com", 1980, "1001/RN", "Cardiologia", "carlos", "carlos123");
+			criarMedico("DRA. ANA PAULA SOUZA", "ana.souza@inovamed.com", 1985, "1002/RN", "Pediatria", "ana", "ana123");
+			criarMedico("DR. ROBERTO LIMA", "roberto.lima@inovamed.com", 1978, "1003/RN", "Ortopedia", "roberto", "roberto123");
+			criarMedico("DRA. MARIANA COSTA", "mariana.costa@inovamed.com", 1990, "1004/RN", "Clínica Geral", "mariana", "mariana123");
+		}}
 	private void criarEspecialidade(String nome, Integer ramal) {
 		Especialidade e = new Especialidade();
 		e.nome = nome;
@@ -38,7 +36,8 @@ public class Inicializador extends Job {
 		e.save();
 	}
 
-	private void criarMedico(String nome, String email, int anoNascimento, String crm, String nomeEspecialidade) {
+	private void criarMedico(String nome, String email, int anoNascimento, String crm,
+			String nomeEspecialidade, String login, String senha) {
 		Especialidade esp = Especialidade.find("nome = ?1", nomeEspecialidade).first();
 
 		Calendar cal = Calendar.getInstance();
@@ -51,6 +50,7 @@ public class Inicializador extends Job {
 		m.nascimento = nascimento;
 		m.crm = crm;
 		m.especialidade = esp;
+		m.login = login;
+		m.definirSenha(senha);
 		m.save();
-	}
-}
+	}}

@@ -1,7 +1,9 @@
 package models;
 
 import java.util.Date;
-
+import java.security.MessageDigest;
+import java.util.UUID;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -31,7 +33,33 @@ public class Medico extends Model{
 	@Enumerated(EnumType.STRING)
 	public Status status;
 	
+	@Column(unique = true)
+	public String login;
+	public String senha;
+	public String salt;
+
+	@Enumerated(EnumType.STRING)
+	public Perfil perfil;
+	
 	public Medico() {
 		this.status = Status.ATIVO;
+		this.perfil = Perfil.MEDICO;
+	}
+	public void definirSenha(String senhaPura) {
+		this.salt = UUID.randomUUID().toString();
+		this.senha = Usuario.hash(senhaPura, this.salt);
+	}
+
+	public static Medico obterUsuario(String login, String senhaPura) {
+		if (login == null || senhaPura == null) {
+			return null;
+		}
+		Medico m = Medico.find("login = ?1 and status = ?2", login.trim(), Status.ATIVO).first();
+		if (m == null || m.senha == null) {
+			return null;
+		}
+		boolean confere = MessageDigest.isEqual(
+			m.senha.getBytes(), Usuario.hash(senhaPura, m.salt).getBytes());
+		return confere ? m : null;
 	}
 }

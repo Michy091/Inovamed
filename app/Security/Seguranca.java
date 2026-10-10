@@ -5,8 +5,7 @@ import models.Perfil;
 import play.mvc.Before;
 import play.mvc.Controller;
 
-public class Seguranca extends Controller{
-
+public class Seguranca extends Controller {
 
 	// AUTENTICAÇÃO
 	@Before
@@ -17,7 +16,7 @@ public class Seguranca extends Controller{
 		}
 	}
 
-	// AUTORIZAÇÃO
+	// AUTORIZAÇÃO (administrador)
 	@Before
 	static void verificarAdministrador() {
 		String perfil = session.get("perfilUsuario");
@@ -26,5 +25,20 @@ public class Seguranca extends Controller{
 			forbidden("Acesso restrito aos administradores do sistema");
 		}
 	}
-	
+
+	// AUTORIZAÇÃO (médico só acessa as próprias consultas)
+	@Before
+	static void verificarMedico() {
+		String perfil = session.get("perfilUsuario");
+		if (Perfil.MEDICO.name().equals(perfil)) {
+			boolean consultas = "Consultas".equals(request.controller);
+			String acao = request.actionMethod;
+			boolean permitida = consultas
+				&& ("listar".equals(acao) || "detalhar".equals(acao) || "concluir".equals(acao));
+			if (!permitida) {
+				forbidden("Médicos têm acesso apenas às suas consultas");
+			}
+		}
+	}
+
 }
