@@ -14,24 +14,30 @@
     </head>
     <body>
 
-       <nav class="navbar navbar-expand navbar-dark bg-dark mb-4">
-    <div class="container">
-        <a class="navbar-brand" href="@{Application.index}">InovaMed</a>
         #{if session['usuarioLogado']}
-        <div class="d-flex align-items-center">
-            <a class="nav-link d-inline me-3" href="@{Pacientes.listar}">Pacientes</a>
-            <a class="nav-link d-inline me-3" href="@{Consultas.listar}">Consultas</a>
-            <a class="nav-link d-inline me-3" href="@{Medicos.listar}">Médicos</a>
-            <a class="nav-link d-inline me-3" href="@{Especialidades.listar}">Especialidades</a>
-            <span class="navbar-text text-light ms-2 me-3">
-                ${session['usuarioNome']}
-                <span class="badge bg-secondary">${session['perfilUsuario']}</span>
-            </span>
-            <a class="btn btn-sm btn-outline-light" href="@{Logins.sair}">Sair</a>
-        </div>
+        <nav class="app-nav">
+            <div class="container app-nav-inner">
+                <a class="brand" href="@{Application.index}"><span class="brand-mark">+</span>InovaMed</a>
+
+                <div class="app-nav-links">
+                    <a href="@{Pacientes.listar}" class="${request.controller == 'Pacientes' ? 'active' : ''}">Pacientes</a>
+                    <a href="@{Consultas.listar}" class="${request.controller == 'Consultas' ? 'active' : ''}">Consultas</a>
+                    <a href="@{Medicos.listar}" class="${request.controller == 'Medicos' ? 'active' : ''}">Médicos</a>
+                    <a href="@{Especialidades.listar}" class="${request.controller == 'Especialidades' ? 'active' : ''}">Especialidades</a>
+                </div>
+
+                <div class="user-chip">
+                    <span class="user-avatar">${session['usuarioNome']?.substring(0, 1)}</span>
+                    <div class="user-meta">
+                        <strong>${session['usuarioNome']}</strong>
+                        <span>${session['perfilUsuario'] == 'ADMIN' ? 'Administrador' : 'Atendente'}</span>
+                    </div>
+                    <a class="btn btn-sm btn-outline-secondary" href="@{Logins.sair}">Sair</a>
+                </div>
+            </div>
+        </nav>
         #{/if}
-    </div>
-</nav>
+
         <div class="container">
 
             #{if flash.success}
@@ -46,14 +52,3 @@
             <footer class="site-footer">
                 <div class="d-flex justify-content-between flex-wrap gap-2">
                     <span><strong>Desenvolvido por José Miguel, Leticia Dionizio e Michelly Silva</strong> </span>
-                  
-                </div>
-            </footer>
-
-        </div>
-
-        <script src="/public/javascripts/jquery-1.6.4.min.js" type="text/javascript" charset="${_response_encoding}"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-        #{get 'moreScripts' /}
-    </body>
-</html>
