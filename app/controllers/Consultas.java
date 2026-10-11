@@ -37,11 +37,15 @@ public class Consultas extends Controller {
 	    if (termo != null) {
 	        termo = termo.trim();
 	    }
-	    if ("MEDICO".equals(session.get("perfilUsuario"))) {
-	        Long medicoId = Long.valueOf(session.get("medicoId"));
+	    if (ehMedico() && (termo == null || termo.isEmpty())) {
 	        consultas = Consulta.find(
 	            "status != ?1 and medico.id = ?2 order by data, horario",
-	            Status.INATIVO, medicoId).fetch();
+	            Status.INATIVO, meuMedicoId()).fetch();
+	    } else if (ehMedico()) {
+	        consultas = Consulta.find(
+	            "status != ?1 and medico.id = ?2 and lower(paciente.nome) like ?3 order by data, horario",
+	            Status.INATIVO, meuMedicoId(), "%" + termo.toLowerCase() + "%"
+	        ).fetch();
 	    } else if (termo == null || termo.isEmpty()) {
 	        consultas = Consulta.find(
 	            "status != ?1 order by data, horario", Status.INATIVO).fetch();

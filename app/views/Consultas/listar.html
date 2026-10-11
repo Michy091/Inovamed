@@ -11,7 +11,9 @@
 
 <div class="data-panel">
     <form action="@{Consultas.listar}" class="toolbar" role="search">
-        <input type="search" name="termo" value="${termo}" placeholder="Buscar por paciente ou médico" class="form-control" />
+        <input type="search" name="termo" value="${termo}"
+       placeholder="${session['perfilUsuario'] == 'MEDICO' ? 'Buscar por paciente' : 'Buscar por paciente ou médico'}"
+       class="form-control" />
         <button type="submit" class="btn btn-outline-primary">Buscar</button>
     </form>
 
